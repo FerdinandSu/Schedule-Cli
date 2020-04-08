@@ -35,7 +35,7 @@ jobs:
     - name: Pack zip
       run: dotnet zip src/HITScheduleMasterCLI/HITScheduleMasterCLI.csproj -c release
     - name: Pack tarball
-      run: dotnet tar src/HITScheduleMasterCLI/HITScheduleMasterCLI.csproj -c release
+      run: dotnet tarball src/HITScheduleMasterCLI/HITScheduleMasterCLI.csproj -c release
     - name: Pack rmp
       run: dotnet rpm src/HITScheduleMasterCLI/HITScheduleMasterCLI.csproj -c release
     - name: Pack deb
