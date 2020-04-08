@@ -29,25 +29,25 @@ jobs:
     - name: Install dependencies
       run: dotnet restore src
     - name: Build
-      run: dotnet build src --configuration release --no-restore
+      run: dotnet build src --configuration Release --no-restore
     - name: Test
       run: dotnet test src --no-restore --verbosity normal
     - name: Pack zip
-      run: dotnet zip src/HITScheduleMasterCLI/HITScheduleMasterCLI.csproj -c release
+      run: dotnet zip src/HITScheduleMasterCLI/HITScheduleMasterCLI.csproj -c Release
     - name: Pack tarball
-      run: dotnet tarball src/HITScheduleMasterCLI/HITScheduleMasterCLI.csproj -c release
+      run: dotnet tarball src/HITScheduleMasterCLI/HITScheduleMasterCLI.csproj -c Release
     - name: Pack rmp
-      run: dotnet rpm src/HITScheduleMasterCLI/HITScheduleMasterCLI.csproj -c release
+      run: dotnet rpm src/HITScheduleMasterCLI/HITScheduleMasterCLI.csproj -c Release
     - name: Pack deb
-      run: dotnet deb src/HITScheduleMasterCLI/HITScheduleMasterCLI.csproj -c release
+      run: dotnet deb src/HITScheduleMasterCLI/HITScheduleMasterCLI.csproj -c Release
     - name: Publish
-      run: dotnet publish src -r linux-x64 -c release --self-contained
+      run: dotnet publish src -r linux-x64 -c Release --self-contained
     - name: rename publish
-      run: mv ./src/HITScheduleMasterCLI/bin/release/netcoreapp3.1/linux-x64/publish ./src/HITScheduleMasterCLI/bin/release/netcoreapp3.1/HITScheduleMasterCLI.linux-x64
+      run: mv ./src/HITScheduleMasterCLI/bin/Release/netcoreapp3.1/linux-x64/publish ./src/HITScheduleMasterCLI/bin/Release/netcoreapp3.1/HITScheduleMasterCLI.linux-x64
     - name: tar
-      run: tar czvf ./src/HITScheduleMasterCLI/bin/release/netcoreapp3.1/HITScheduleMasterCLI.linux-x64.tar.gz ./src/HITScheduleMasterCLI/bin/release/netcoreapp3.1/HITScheduleMasterCLI.linux-x64
+      run: tar czvf ./src/HITScheduleMasterCLI/bin/Release/netcoreapp3.1/HITScheduleMasterCLI.linux-x64.tar.gz ./src/HITScheduleMasterCLI/bin/Release/netcoreapp3.1/HITScheduleMasterCLI.linux-x64
     - name: Upload artifact
       uses: actions/upload-artifact@v1.0.0
       with:
         name: linux-builds
-        path: ./src/HITScheduleMasterCLI/bin/release/netcoreapp3.1
+        path: ./src/HITScheduleMasterCLI/bin/Release/netcoreapp3.1
