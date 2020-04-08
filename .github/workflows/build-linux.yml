@@ -1,0 +1,46 @@
+name: Build on Linux
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: linux-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.201
+    - name: Install zip tool
+      run: dotnet tool install --global dotnet-zip
+    - name: Install tarball tool
+      run: dotnet tool install --global dotnet-tarball
+    - name: Install rpm tool
+      run: dotnet tool install --global dotnet-rpm
+    - name: Install deb tool
+      run: dotnet tool install --global dotnet-deb
+  
+    - name: Install dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build src --configuration release --no-restore
+    - name: Test
+      run: dotnet test src --no-restore --verbosity normal
+    - name: Pack zip
+      run: dotnet zip src/HITScheduleMasterCLI/HITScheduleMasterCLI.csproj -c release
+    - name: Pack tarball
+      run: dotnet tar src/HITScheduleMasterCLI/HITScheduleMasterCLI.csproj -c release
+    - name: Pack rmp
+      run: dotnet rpm src/HITScheduleMasterCLI/HITScheduleMasterCLI.csproj -c release
+    - name: Pack deb
+      run: dotnet deb src/HITScheduleMasterCLI/HITScheduleMasterCLI.csproj -c release
+    - name: Upload artifact
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: linux-build
+        path: ./src/HITScheduleMasterCLI/bin/release/netcoreapp3.1
+
