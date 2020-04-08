@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-name: Build on Linux
-=======
-name: Build for OSX
->>>>>>> 0862954a7c1675284675406919051a5dfe0100cd
+name: Build on MacOS
 
 on:
   push:
