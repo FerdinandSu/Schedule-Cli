@@ -59,13 +59,13 @@
 
 输入'ls'即可获得所有可用命令:
 
-![](./images/image-6.png)
+![](https://raw.githubusercontent.com/HCGStudio/HIT-Schedule-Master-CLI/images/image-6.png)
 
 ### 一般用法
 
 直接使用Export+要保存到的ics位置，即可快速完成导出。
 
-![](./images/image-7.png)
+![](https://raw.githubusercontent.com/HCGStudio/HIT-Schedule-Master-CLI/images/image-7.png)
 
 ### 进阶用法
 
@@ -78,13 +78,13 @@ Json格式课表可以使用LoadJson来导入。New则是从头开始手动创�
 ImpCse和ExpCse可以导入或者导出单个课程。
 Add则是从头开始手动加入课程。
 
-![](./images/image-8.png)
+![](https://raw.githubusercontent.com/HCGStudio/HIT-Schedule-Master-CLI/images/image-8.png)
 
-![](./images/image-9.png)
+![](https://raw.githubusercontent.com/HCGStudio/HIT-Schedule-Master-CLI/images/image-9.png)
 
 Edit则可以对课程进行编辑
 
-![](./images/image-10.png)
+![](https://raw.githubusercontent.com/HCGStudio/HIT-Schedule-Master-CLI/images/image-10.png)
 
 Romove删除课程。
 
@@ -98,16 +98,16 @@ Romove删除课程。
 
 根据提示，选择指定的日历即可完成导入。
 
-![image1](./images/image-1.png)
+![image1](https://raw.githubusercontent.com/HCGStudio/HIT-Schedule-Master-CLI/images/image-1.png)
 
 导入后，日历将与您登录的电子邮件账户同步，在移动端登录邮箱也会同步导入的日历。
 
 ### Outlook日历如何导入
 
 1. 首先登陆网页版[网页版Outlook日历](https://outlook.live.com/calendar/)进行导入。
-2. 在左边栏中点击"添加日历"![image2](./images/image-3.png)
-3. 在弹出的窗口中，如图示完成新建日历。![image3](./images/image-4.png)
-4. 将ICS描述的事件导入到新建的日历中。![image4](./images/image-5.png)
+2. 在左边栏中点击"添加日历"![image2](https://raw.githubusercontent.com/HCGStudio/HIT-Schedule-Master-CLI/images/image-3.png)
+3. 在弹出的窗口中，如图示完成新建日历。![image3](https://raw.githubusercontent.com/HCGStudio/HIT-Schedule-Master-CLI/images/image-4.png)
+4. 将ICS描述的事件导入到新建的日历中。![image4](https://raw.githubusercontent.com/HCGStudio/HIT-Schedule-Master-CLI/images/image-5.png)
 
 
 ### Google日历 如何导入
