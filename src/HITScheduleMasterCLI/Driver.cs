@@ -73,6 +73,7 @@ namespace HITScheduleMasterCLI
                 Environment.Exit(0);
             }
         }
+        [MsAlias("Rm")]
         [MsInfo("从课表移除一个JSON描述的课程：Remove <ID>")]
         public void Remove(string id)
         {
@@ -82,6 +83,7 @@ namespace HITScheduleMasterCLI
                 Schedule.RemoveAt(index);
             }
         }
+        [MsAlias("Ed")]
         [MsInfo("编辑课表中的课程：Edit <ID>")]
         public void Edit(string id)
         {
@@ -118,6 +120,7 @@ namespace HITScheduleMasterCLI
         WrongInput:
             Io?.WriteLine("非法输入。", OutputType.Error);
         }
+        [MsAlias("Ex")]
         [MsInfo("导出整张课表：Export <.ics>")]
         public void Export(string path = "")
         {
@@ -174,13 +177,14 @@ namespace HITScheduleMasterCLI
                 ShowScheduleEntry(i, maxWeek, Schedule[i]);
             }
         }
+        [MsAlias("Ld")]
         [MsInfo("从xls导入整个课表：LoadXls <.xls>")]
         public void LoadXls(string path)
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             if (!File.Exists(path))
             {
-                Io?.WriteLine("未找到文件。", OutputType.Error);
+                Io.WriteLine("未找到文件。", OutputType.Error);
                 return;
             }
 
