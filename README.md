@@ -1,4 +1,15 @@
 # 哈工大课表大师  ~~(打安排御主)~~(跨平台命令行版)
+
+![Build on Linux](https://github.com/HCGStudio/HIT-Schedule-Master-CLI/workflows/Build%20on%20Linux/badge.svg)
+
+![Build on MacOS](https://github.com/HCGStudio/HIT-Schedule-Master-CLI/workflows/Build%20on%20MacOS/badge.svg)
+
+![Build on Windows](https://github.com/HCGStudio/HIT-Schedule-Master-CLI/workflows/Build%20on%20Windows/badge.svg)
+
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/HCGStudio/HIT-Schedule-Master-CLI)
+
+![GitHub issues](https://img.shields.io/github/issues/HCGStudio/HIT-Schedule-Master-CLI)
+
 本应用使用dotnet core编写，完全开放、开源
 
 运行时下载：https://dotnet.microsoft.com/download/dotnet-core/3.1
@@ -13,7 +24,7 @@
 
 如果您对本程序进行了改进，欢迎PR！
 
-[下载地址](https://github.com/Plastic-Metal/HIT-Schedule-Master-CLI/releases)
+[下载地址](https://github.com/HCGStudio/HIT-Schedule-Master-CLI/releases)
 
 ## 主要功能
 
