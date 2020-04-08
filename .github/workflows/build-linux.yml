@@ -40,9 +40,14 @@ jobs:
       run: dotnet rpm src/HITScheduleMasterCLI/HITScheduleMasterCLI.csproj -c release
     - name: Pack deb
       run: dotnet deb src/HITScheduleMasterCLI/HITScheduleMasterCLI.csproj -c release
+    - name: Publish
+      run: dotnet publish src -r linux-x64 -c release --self-contained
+    - name: rename publish
+      run: mv ./src/HITScheduleMasterCLI/bin/release/netcoreapp3.1/linux-x64/publish ./src/HITScheduleMasterCLI/bin/release/netcoreapp3.1/HITScheduleMasterCLI.linux-x64
+    - name: tar
+      run: tar czvf ./src/HITScheduleMasterCLI/bin/release/netcoreapp3.1/HITScheduleMasterCLI.linux-x64.tar.gz ./src/HITScheduleMasterCLI/bin/release/netcoreapp3.1/HITScheduleMasterCLI.linux-x64
     - name: Upload artifact
       uses: actions/upload-artifact@v1.0.0
       with:
-        name: linux-build
+        name: linux-builds
         path: ./src/HITScheduleMasterCLI/bin/release/netcoreapp3.1
-
