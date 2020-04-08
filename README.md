@@ -14,6 +14,8 @@
 
 运行时下载：https://dotnet.microsoft.com/download/dotnet-core/3.1
 
+在`release`中也提供了的方法
+
 本应用仅适用于**哈尔滨工业大学**的课程导出，不兼容其他学校的系统
 
 **作者不对使用本程序产生的任何后果负责**
