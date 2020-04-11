@@ -1,4 +1,5 @@
-﻿using PlasticMetal.MobileSuit;
+﻿using System.Threading;
+using PlasticMetal.MobileSuit;
 
 namespace HITScheduleMasterCLI
 {
@@ -7,6 +8,8 @@ namespace HITScheduleMasterCLI
         
         static void Main(string[] args)
         {
+            Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.GetCultureInfo("zh-CN");
+            Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.GetCultureInfo("zh-CN");
             (new MsHost(new Driver())).Run();
 
         }
