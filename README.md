@@ -1,7 +1,20 @@
 # 哈工大课表大师  ~~(打安排御主)~~(跨平台命令行版)
+
+![Build on Linux](https://github.com/HCGStudio/HIT-Schedule-Master-CLI/workflows/Build%20on%20Linux/badge.svg)
+
+![Build on MacOS](https://github.com/HCGStudio/HIT-Schedule-Master-CLI/workflows/Build%20on%20MacOS/badge.svg)
+
+![Build on Windows](https://github.com/HCGStudio/HIT-Schedule-Master-CLI/workflows/Build%20on%20Windows/badge.svg)
+
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/HCGStudio/HIT-Schedule-Master-CLI)
+
+![GitHub issues](https://img.shields.io/github/issues/HCGStudio/HIT-Schedule-Master-CLI)
+
 本应用使用dotnet core编写，完全开放、开源
 
 运行时下载：https://dotnet.microsoft.com/download/dotnet-core/3.1
+
+在`release`中也提供了自带运行时无需实现安装运行时的版本。
 
 本应用仅适用于**哈尔滨工业大学**的课程导出，不兼容其他学校的系统
 
@@ -13,7 +26,7 @@
 
 如果您对本程序进行了改进，欢迎PR！
 
-[下载地址](https://github.com/Plastic-Metal/HIT-Schedule-Master-CLI/releases)
+[下载地址](https://github.com/HCGStudio/HIT-Schedule-Master-CLI/releases)
 
 ## 主要功能
 
@@ -46,13 +59,13 @@
 
 输入'ls'即可获得所有可用命令:
 
-![](./images/image-6.png)
+![](https://github.com/HCGStudio/HIT-Schedule-Master-CLI/raw/master/images/image-6.png)
 
 ### 一般用法
 
 直接使用Export+要保存到的ics位置，即可快速完成导出。
 
-![](./images/image-7.png)
+![](https://github.com/HCGStudio/HIT-Schedule-Master-CLI/raw/master/images/image-7.png)
 
 ### 进阶用法
 
@@ -65,13 +78,13 @@ Json格式课表可以使用LoadJson来导入。New则是从头开始手动创�
 ImpCse和ExpCse可以导入或者导出单个课程。
 Add则是从头开始手动加入课程。
 
-![](./images/image-8.png)
+![](https://github.com/HCGStudio/HIT-Schedule-Master-CLI/raw/master/images/image-8.png)
 
-![](./images/image-9.png)
+![](https://github.com/HCGStudio/HIT-Schedule-Master-CLI/raw/master/images/image-9.png)
 
 Edit则可以对课程进行编辑
 
-![](./images/image-10.png)
+![](https://github.com/HCGStudio/HIT-Schedule-Master-CLI/raw/master/images/image-10.png)
 
 Romove删除课程。
 
@@ -85,16 +98,16 @@ Romove删除课程。
 
 根据提示，选择指定的日历即可完成导入。
 
-![image1](./images/image-1.png)
+![image1](https://github.com/HCGStudio/HIT-Schedule-Master-CLI/raw/master/images/image-1.png)
 
 导入后，日历将与您登录的电子邮件账户同步，在移动端登录邮箱也会同步导入的日历。
 
 ### Outlook日历如何导入
 
 1. 首先登陆网页版[网页版Outlook日历](https://outlook.live.com/calendar/)进行导入。
-2. 在左边栏中点击"添加日历"![image2](./images/image-3.png)
-3. 在弹出的窗口中，如图示完成新建日历。![image3](./images/image-4.png)
-4. 将ICS描述的事件导入到新建的日历中。![image4](./images/image-5.png)
+2. 在左边栏中点击"添加日历"![image2](https://github.com/HCGStudio/HIT-Schedule-Master-CLI/raw/master/images/image-3.png)
+3. 在弹出的窗口中，如图示完成新建日历。![image3](https://github.com/HCGStudio/HIT-Schedule-Master-CLI/raw/master/images/image-4.png)
+4. 将ICS描述的事件导入到新建的日历中。![image4](https://github.com/HCGStudio/HIT-Schedule-Master-CLI/raw/master/images/image-5.png)
 
 
 ### Google日历 如何导入
