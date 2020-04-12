@@ -1,4 +1,4 @@
-# 哈工大课表大师  ~~(打安排御主)~~(跨平台命令行版)
+# 哈工大课表大师  <del>(打安排御主)</del>(跨平台命令行版)
 
 ![Build on Linux](https://github.com/HCGStudio/HIT-Schedule-Master-CLI/workflows/Build%20on%20Linux/badge.svg)
 
