@@ -14,8 +14,8 @@ using static Newtonsoft.Json.JsonConvert;
 
 namespace HITScheduleMasterCLI
 {
-    [MsInfo("HIT-Schedule-Master")]
-    public class Driver : MsClient
+    [SuitInfo("HIT-Schedule-Master")]
+    public class Driver : SuitClient
     {
         private Schedule Schedule { get; set; }
 
@@ -23,58 +23,58 @@ namespace HITScheduleMasterCLI
         {
             Text = "HIT-Schedule-Master";
         }
-        [MsInfo("向课表添加一个课程")]
+        [SuitInfo("向课表添加一个课程")]
         public void Add()
         {
-            var name = Io.ReadLine("输入课程名称");
-            if (!int.TryParse(Io.ReadLine("输入星期(0-6,0表示周日)"), out var week)
+            var name = IO.ReadLine("输入课程名称");
+            if (!int.TryParse(IO.ReadLine("输入星期(0-6,0表示周日)"), out var week)
             || week < 0 || week > 6) goto WrongInput;
-            var teacher = Io.ReadLine("输入教师");
-            var location = Io.ReadLine("输入地点");
-            if (!TimeSpan.TryParse(Io.ReadLine("输入开始时间(hh:mm:ss)"), out var startTime))
+            var teacher = IO.ReadLine("输入教师");
+            var location = IO.ReadLine("输入地点");
+            if (!TimeSpan.TryParse(IO.ReadLine("输入开始时间(hh:mm:ss)"), out var startTime))
                 goto WrongInput;
-            if (!TimeSpan.TryParse(Io.ReadLine("输入持续时间(hh:mm:ss)"), out var length))
+            if (!TimeSpan.TryParse(IO.ReadLine("输入持续时间(hh:mm:ss)"), out var length))
                 goto WrongInput;
 
-            var weekExpression = Io.ReadLine("输入周数(周数/起始-截至[单/双/(无)])");
+            var weekExpression = IO.ReadLine("输入周数(周数/起始-截至[单/双/(无)])");
             Schedule.AddScheduleEntry(new ScheduleEntry((DayOfWeek)week, default,
                     name, $"{teacher}[{weekExpression}]@{location}")
             { StartTime = startTime, Length = length });
             return;
         WrongInput:
-            Io.WriteLine("非法输入。", OutputType.Error);
+            IO.WriteLine("非法输入。", OutputType.Error);
 
         }
-        [MsInfo("向课表导入一个JSON描述的课程: ImpCse <.json>")]
+        [SuitInfo("向课表导入一个JSON描述的课程: ImpCse <.json>")]
         public void ImpCse(string path)
         {
             if (!File.Exists(path))
             {
-                Io.WriteLine("未找到文件。", OutputType.Error);
+                IO.WriteLine("未找到文件。", OutputType.Error);
                 return;
             }
             Schedule.AddScheduleEntry(DeserializeObject<ScheduleEntry>(File.ReadAllText(path)));
         }
-        [MsInfo("从课表导出一个JSON描述的课程：ExpCse <ID> <.json>")]
+        [SuitInfo("从课表导出一个JSON描述的课程：ExpCse <ID> <.json>")]
         public void ExpCse(string id, string path = "")
         {
             if (Schedule is null) return;
 
             if (!int.TryParse(id, out var index) || index < 0 || index >= Schedule.Count) return;
             if (path == "")
-                path = Io.ReadLine("输入保存文件位置");
+                path = IO.ReadLine("输入保存文件位置");
             try
             {
                 File.WriteAllText(path, SerializeObject(Schedule[index]));
             }
             catch
             {
-                Io.WriteLine("写入错误。", OutputType.Error);
+                IO.WriteLine("写入错误。", OutputType.Error);
                 Environment.Exit(0);
             }
         }
-        [MsAlias("Rm")]
-        [MsInfo("从课表移除一个JSON描述的课程：Remove <ID>")]
+        [SuitAlias("Rm")]
+        [SuitInfo("从课表移除一个JSON描述的课程：Remove <ID>")]
         public void Remove(string id)
         {
             if (Schedule is null) return;
@@ -83,66 +83,66 @@ namespace HITScheduleMasterCLI
                 Schedule.RemoveAt(index);
             }
         }
-        [MsAlias("Ed")]
-        [MsInfo("编辑课表中的课程：Edit <ID>")]
+        [SuitAlias("Ed")]
+        [SuitInfo("编辑课表中的课程：Edit <ID>")]
         public void Edit(string id)
         {
             if (Schedule is null) return;
             if (int.TryParse(id, out var index) && index >= 0 && index < Schedule.Count)
             {
                 var course = Schedule[index];
-                course.CourseName = Io.ReadLine($"输入课程名称={course.CourseName}", course.CourseName,
+                course.CourseName = IO.ReadLine($"输入课程名称={course.CourseName}", course.CourseName,
                     null);
-                if (!int.TryParse(Io.ReadLine($"输入星期(0-6,0表示周日)={((int)course.DayOfWeek)}",
+                if (!int.TryParse(IO.ReadLine($"输入星期(0-6,0表示周日)={((int)course.DayOfWeek)}",
                             ((int)course.DayOfWeek).ToString(), null)
                     , out var week)
                     || week < 0 || week > 6) goto WrongInput;
                 course.DayOfWeek = (DayOfWeek)week;
-                course.Teacher = Io.ReadLine($"输入教师={course.Teacher}", course.Teacher, null);
-                course.Location = Io.ReadLine($"输入地点={course.Location}", course.Location, null);
-                if (!TimeSpan.TryParse(Io.ReadLine($"输入开始时间(hh:mm:ss)={course.StartTime}",
+                course.Teacher = IO.ReadLine($"输入教师={course.Teacher}", course.Teacher, null);
+                course.Location = IO.ReadLine($"输入地点={course.Location}", course.Location, null);
+                if (!TimeSpan.TryParse(IO.ReadLine($"输入开始时间(hh:mm:ss)={course.StartTime}",
                     course.StartTime.ToString(), null), out var startTime))
                     goto WrongInput;
                 course.StartTime = startTime;
-                if (!TimeSpan.TryParse(Io.ReadLine($"输入持续时间(hh:mm:ss)={course.Length}",
+                if (!TimeSpan.TryParse(IO.ReadLine($"输入持续时间(hh:mm:ss)={course.Length}",
                     course.Length.ToString(), null), out var length))
                     goto WrongInput;
                 course.Length = length;
-                var weekExpression = Io.ReadLine(
+                var weekExpression = IO.ReadLine(
                     $"输入周数(周数/起始-截至[单/双/(无)]，空格隔开)={course.WeekExpression}", course.WeekExpression, null);
                 if (weekExpression != course.WeekExpression)
                 {
-                    course.ChangeWeek(weekExpression);
+                    course.WeekExpression = weekExpression;
                 }
                 return;
 
             }
         WrongInput:
-            Io.WriteLine("非法输入。", OutputType.Error);
+            IO.WriteLine("非法输入。", OutputType.Error);
         }
-        [MsAlias("Ex")]
-        [MsInfo("导出整张课表：Export <.ics>")]
+        [SuitAlias("Ex")]
+        [SuitInfo("导出整张课表：Export <.ics>")]
         public void Export(string path = "")
         {
             ScheduleCheck();
             if (Schedule is null) return;
             if (path == "")
-                path = Io.ReadLine("输入保存文件位置");
+                path = IO.ReadLine("输入保存文件位置");
             try
             {
                 var calendar = Schedule.GetCalendar();
-                //calendar.Name = Io.ReadLine($"输入课表名称(默认:{calendar.Name})", calendar.Name, null);
+                //calendar.Name = IO.ReadLine($"输入课表名称(默认:{calendar.Name})", calendar.Name, null);
                 File.WriteAllText(path,
                     new CalendarSerializer().SerializeToString(calendar),
                     new UTF8Encoding(false));
             }
             catch
             {
-                Io.WriteLine("写入错误。", OutputType.Error);
+                IO.WriteLine("写入错误。", OutputType.Error);
                 Environment.Exit(0);
             }
         }
-        [MsInfo("显示整张课表：Export <.ics>")]
+        [SuitInfo("显示整张课表：Export <.ics>")]
         public void Show()
         {
             ScheduleCheck();
@@ -171,80 +171,80 @@ namespace HITScheduleMasterCLI
                 outList.Add(($"{i} ".PadLeft(4, '0'), null));
             }
 
-            Io.WriteLine(outList, OutputType.ListTitle);
+            IO.WriteLine(outList, OutputType.ListTitle);
             for (var i = 0; i < Schedule.Count; i++)
             {
                 ShowScheduleEntry(i, maxWeek, Schedule[i]);
             }
         }
-        [MsAlias("Ld")]
-        [MsInfo("从xls导入整个课表：LoadXls <.xls>")]
+        [SuitAlias("Ld")]
+        [SuitInfo("从xls导入整个课表：LoadXls <.xls>")]
         public void LoadXls(string path)
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             if (!File.Exists(path))
             {
-                Io.WriteLine("未找到文件。", OutputType.Error);
+                IO.WriteLine("未找到文件。", OutputType.Error);
                 return;
             }
 
             using var fs = File.OpenRead(path);
             Schedule = Schedule.LoadFromXlsStream(fs);
         }
-        [MsInfo("从json导入整个课表：LoadJson <.json>")]
+        [SuitInfo("从json导入整个课表：LoadJson <.json>")]
         public void LoadJson(string path)
         {
             if (!File.Exists(path))
             {
-                Io.WriteLine("未找到文件。", OutputType.Error);
+                IO.WriteLine("未找到文件。", OutputType.Error);
                 return;
             }
             Schedule = DeserializeObject<Schedule>(File.ReadAllText(path));
         }
-        [MsInfo("创建新课表")]
+        [SuitInfo("创建新课表")]
         public void New()
         {
             if (!(int.TryParse(
-                    Io.ReadLine("输入年份", "1", null), out var year)
+                    IO.ReadLine("输入年份", "1", null), out var year)
                 && year >= 2020 && year <= 2021))
             {
-                Io.WriteLine("无效输入。", OutputType.Error);
+                IO.WriteLine("无效输入。", OutputType.Error);
                 return;
             }
-            Io.WriteLine("选择学期：", OutputType.ListTitle);
-            Io.AppendWriteLinePrefix();
-            Io.WriteLine("0. 春(默认)");
-            Io.WriteLine("1. 夏");
-            Io.WriteLine("2. 秋");
-            Io.SubtractWriteLinePrefix();
+            IO.WriteLine("选择学期：", OutputType.ListTitle);
+            IO.AppendWriteLinePrefix();
+            IO.WriteLine("0. 春(默认)");
+            IO.WriteLine("1. 夏");
+            IO.WriteLine("2. 秋");
+            IO.SubtractWriteLinePrefix();
             if (!int.TryParse(
-                    Io.ReadLine("", "0", null), out var s) || s > 2 || s < 0)
+                    IO.ReadLine("", "0", null), out var s) || s > 2 || s < 0)
             {
-                Io.WriteLine("无效输入。", OutputType.Error);
+                IO.WriteLine("无效输入。", OutputType.Error);
                 return;
             }
 
             Schedule = new Schedule(year, (Semester)s);
         }
-        [MsAlias("Dl")]
-        [MsInfo("打开浏览器下载课表")]
+        [SuitAlias("Dl")]
+        [SuitInfo("打开浏览器下载课表")]
         public void Download()
         {
             Process.Start(new ProcessStartInfo("http://jwts-hit-edu-cn.ivpn.hit.edu.cn/") {UseShellExecute = true});
         }
 
-        [MsInfo("初始化课表")]
+        [SuitInfo("初始化课表")]
         public void Init()
         {
-            Io.WriteLine("课表尚未初始化，您可以：", OutputType.ListTitle);
-            Io.AppendWriteLinePrefix();
-            //Io.WriteLine("0. 自动导入(默认)");
-            Io.WriteLine("1. 手动导入XLS(默认)");
-            Io.WriteLine("2. 手动导入JSON");
-            Io.WriteLine("3. 创建新的课表");
-            Io.WriteLine("其它. 退出");
-            Io.SubtractWriteLinePrefix();
-            if (int.TryParse(Io.ReadLine("选择", "1", null), out var o))
+            IO.WriteLine("课表尚未初始化，您可以：", OutputType.ListTitle);
+            IO.AppendWriteLinePrefix();
+            //IO.WriteLine("0. 自动导入(默认)");
+            IO.WriteLine("1. 手动导入XLS(默认)");
+            IO.WriteLine("2. 手动导入JSON");
+            IO.WriteLine("3. 创建新的课表");
+            IO.WriteLine("其它. 退出");
+            IO.SubtractWriteLinePrefix();
+            if (int.TryParse(IO.ReadLine("选择", "1", null), out var o))
             {
                 switch (o)
                 {
@@ -252,10 +252,10 @@ namespace HITScheduleMasterCLI
                     //    Auto();
                     //    break;
                     case 1:
-                        LoadXls(Io.ReadLine("Xls位置"));
+                        LoadXls(IO.ReadLine("Xls位置"));
                         break;
                     case 2:
-                        LoadJson(Io.ReadLine("Json位置"));
+                        LoadJson(IO.ReadLine("Json位置"));
                         break;
                     case 3:
                         New();
@@ -271,20 +271,20 @@ namespace HITScheduleMasterCLI
             }
 
         }
-        [MsInfo("保存整张课表到Json：Save <.json>")]
+        [SuitInfo("保存整张课表到Json：Save <.json>")]
         public void Save(string path = "")
         {
             ScheduleCheck();
             if (Schedule is null) return;
             if (path == "")
-                path = Io.ReadLine("输入保存JSON文件位置");
+                path = IO.ReadLine("输入保存JSON文件位置");
             try
             {
                 File.WriteAllText(path, SerializeObject(Schedule));
             }
             catch
             {
-                Io.WriteLine("写入错误。", OutputType.Error);
+                IO.WriteLine("写入错误。", OutputType.Error);
                 Environment.Exit(0);
             }
         }
@@ -326,7 +326,7 @@ namespace HITScheduleMasterCLI
                 }
             }
 
-            Io.WriteLine(outList);
+            IO.WriteLine(outList);
         }
 
     }

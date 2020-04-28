@@ -10,7 +10,7 @@ namespace HITScheduleMasterCLI
         {
             Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.GetCultureInfo("zh-CN");
             Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.GetCultureInfo("zh-CN");
-            (new MsHost(new Driver())).Run();
+            (new SuitHost(new Driver())).Run();
 
         }
         
