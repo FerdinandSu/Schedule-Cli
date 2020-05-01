@@ -147,7 +147,7 @@ namespace HITScheduleMasterCLI
         {
             ScheduleCheck();
             if (Schedule is null) return;
-            var maxWeek = (from e in Schedule.Entries select e.MaxWeek).Max();
+            var maxWeek = (from e in Schedule select e.MaxWeek).Max();
             var outList = new List<(string, ConsoleColor?)>
             {
                 ("编号",null),
