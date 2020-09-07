@@ -27,5 +27,5 @@ jobs:
       uses: actions/upload-artifact@v1.0.0
       with:
         name: osx-publish
-        path: ./src/HITScheduleMasterCLI/bin/Release/netcoreapp3.1/osx-x64/publish
+        path: ./src/bin/Release/netcoreapp3.1/osx-x64/publish
 

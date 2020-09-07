@@ -27,5 +27,5 @@ jobs:
       uses: actions/upload-artifact@v1.0.0
       with:
         name: windows-publish
-        path: .\src\HITScheduleMasterCLI\bin\release\netcoreapp3.1\win-x64\publish
+        path: .\src\bin\release\netcoreapp3.1\win-x64\publish
 
