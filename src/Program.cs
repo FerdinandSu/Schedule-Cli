@@ -1,5 +1,7 @@
 ﻿using System.Threading;
 using PlasticMetal.MobileSuit;
+using PlasticMetal.MobileSuit.Core;
+using PlasticMetal.MobileSuit.ObjectModel.Future;
 
 namespace HITScheduleMasterCLI
 {
@@ -8,9 +10,12 @@ namespace HITScheduleMasterCLI
         
         static void Main(string[] args)
         {
-            Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.GetCultureInfo("zh-CN");
-            Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.GetCultureInfo("zh-CN");
-            (new SuitHost(new Driver())).Run();
+            Suit.GetBuilder()
+                .UsePrompt<PowerLineThemedPromptServer>()
+                //.UseLog(ILogger.OfDirectory("D:\\"))
+                .Build<Driver>()
+                .Run(args);
+ 
 
         }
         

@@ -7,15 +7,14 @@ using System.Text;
 using Ical.Net.Serialization;
 using PlasticMetal.MobileSuit;
 using HCGStudio.HITScheduleMasterCore;
-using PlasticMetal.MobileSuit.IO;
 using PlasticMetal.MobileSuit.ObjectModel;
-using PlasticMetal.MobileSuit.ObjectModel.Attributes;
+
 using static Newtonsoft.Json.JsonConvert;
 
 namespace HITScheduleMasterCLI
 {
     [SuitInfo("HIT-Schedule-Master")]
-    public class Driver : SuitClient
+    public class Driver : CommandLineApplication<StartUp>
     {
         private Schedule Schedule { get; set; }
 
@@ -329,5 +328,25 @@ namespace HITScheduleMasterCLI
             IO.WriteLine(outList);
         }
 
+        public override void SuitShowUsage()
+        {
+            IO.WriteLine("Usage: \n\tHITScheduleMasterCLI\n\tHITScheduleMasterCLI -i <.xls> -o <.ics>");
+        }
+
+        public override int SuitStartUp(StartUp arg)
+        {
+            try
+            {
+                LoadXls(arg.Input);
+                Export(arg.Output);
+                return 0;
+            }
+            catch (Exception e)
+            {
+                IO.WriteLine(e.Message);
+                return -1;
+            }
+
+        }
     }
 }
