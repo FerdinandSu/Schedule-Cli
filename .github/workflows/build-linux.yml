@@ -33,13 +33,13 @@ jobs:
     - name: Test
       run: dotnet test src --no-restore --verbosity normal
     - name: Pack zip
-      run: dotnet zip src/HITScheduleMasterCLI/HITScheduleMasterCLI.csproj -c Release
+      run: dotnet zip src/HITScheduleMasterCLI.csproj -c Release
     - name: Pack tarball
-      run: dotnet tarball src/HITScheduleMasterCLI/HITScheduleMasterCLI.csproj -c Release
+      run: dotnet tarball src/HITScheduleMasterCLI.csproj -c Release
     - name: Pack rmp
-      run: dotnet rpm src/HITScheduleMasterCLI/HITScheduleMasterCLI.csproj -c Release
+      run: dotnet rpm src/HITScheduleMasterCLI.csproj -c Release
     - name: Pack deb
-      run: dotnet deb src/HITScheduleMasterCLI/HITScheduleMasterCLI.csproj -c Release
+      run: dotnet deb src/HITScheduleMasterCLI.csproj -c Release
     - name: Publish
       run: dotnet publish src -r linux-x64 -c Release --self-contained
     - name: rename publish
