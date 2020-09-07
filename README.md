@@ -57,17 +57,23 @@
 
 ## CLI版本使用说明
 
+### 快速使用
+
+直接执行`HITScheduleMasterCLI -i <.xls> -o <.ics>`即可
+
+### 细节使用
+
 输入'ls'即可获得所有可用命令:
 
 ![](https://github.com/HCGStudio/HIT-Schedule-Master-CLI/raw/master/images/image-6.png)
 
-### 一般用法
+#### 一般用法
 
 直接使用Export+要保存到的ics位置，即可快速完成导出。
 
 ![](https://github.com/HCGStudio/HIT-Schedule-Master-CLI/raw/master/images/image-7.png)
 
-### 进阶用法
+#### 进阶用法
 
 LoadXls可以导入Xls格式的课表，然后可以使用Save将其保存到Json。
 
