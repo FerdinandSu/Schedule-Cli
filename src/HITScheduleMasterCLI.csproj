@@ -3,10 +3,39 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <Version>1.2.2</Version>
-    <ApplicationIcon>hsm.ico</ApplicationIcon>
-  </PropertyGroup>
+    <PackageId>HitSM-cli</PackageId>
+    <Authors>HCGStudio</Authors>
 
+    <ApplicationIcon>..\images\icon.ico</ApplicationIcon>
+    <StartupObject>HITScheduleMasterCLI.Program</StartupObject>
+    <AssemblyName>HitSM</AssemblyName>
+    <RootNamespace>HITScheduleMasterCLI</RootNamespace>
+    <GenerateDocumentFile>true</GenerateDocumentFile>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+
+    <Company>HCGStudio</Company>
+    <PackageProjectUrl>https://github.com/HCGStudio/HIT-Schedule-Master-CLI</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/HCGStudio/HIT-Schedule-Master-CLI.git</RepositoryUrl>
+    <RepositoryType>Github</RepositoryType>
+    <Version>1.2.3</Version>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Nullable>enable</Nullable>
+    <LangVersion>8.0</LangVersion>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <PackAsTool>true</PackAsTool>
+
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+    <Description>用于将哈尔滨工业大学的课表转换为iCalendar格式.</Description>
+    <Copyright>Copyright (c) 2019-2020 HCGStudio</Copyright>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageIcon>icon.png</PackageIcon>
+    <NeutralLanguage>zh-CN</NeutralLanguage>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\images\icon.png" Pack="true" PackagePath="\" />
+    <None Include="..\images\icon.ico" Pack="true" PackagePath="\" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="HCGStudio.HITScheduleMasterCore" Version="1.2.3" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
