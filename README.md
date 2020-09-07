@@ -16,17 +16,12 @@
 
 使用说明参见[此处](https://github.com/HCGStudio/HIT-Schedule-Master-CLI/blob/master/QUICKSTART.md)
 
-本应用仅适用于**哈尔滨工业大学**的课程导出，不兼容其他学校的系统
-
-**作者不对使用本程序产生的任何后果负责**
-
 ![GPL3orLater](https://www.gnu.org/graphics/gplv3-or-later.png)
 
 如果您在使用本程序的时候遇到了BUG或者有什么好的建议，欢迎您在Issuses中提出。
 
 如果您对本程序进行了改进，欢迎PR！
 
-[下载地址](https://github.com/HCGStudio/HIT-Schedule-Master-CLI/releases)
 
 ## 主要功能
 
@@ -55,3 +50,6 @@
 
 - 暂无
 
+本应用仅适用于**哈尔滨工业大学**的课程导出，不兼容其他学校的系统
+
+**作者不对使用本程序产生的任何后果负责**
