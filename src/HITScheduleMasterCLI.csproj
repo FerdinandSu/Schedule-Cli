@@ -17,7 +17,7 @@
     <PackageProjectUrl>https://github.com/HCGStudio/HIT-Schedule-Master-CLI</PackageProjectUrl>
     <RepositoryUrl>https://github.com/HCGStudio/HIT-Schedule-Master-CLI.git</RepositoryUrl>
     <RepositoryType>Github</RepositoryType>
-    <Version>1.3.0</Version>
+    <Version>1.3.0.2</Version>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Nullable>enable</Nullable>
     <LangVersion>8.0</LangVersion>
