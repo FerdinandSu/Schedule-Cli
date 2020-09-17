@@ -14,6 +14,8 @@ HITScheduleMasterCLI被打包为dotnet global tool，因此在终端中执行`do
 
 直接执行`HitSM -i <.xls> -o <.ics>`即可
 
+如果您想打开通知，使用`HitSM -i <.xls> -o <.ics> -n`
+
 ### 细节使用
 
 执行`HitSM`命令来启动程序
