@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace HITScheduleMasterCLI
+namespace HitScheduleMaster
 {
-    public class StartUp:AutoDynamicParameter
+    public class StartUpArgs:AutoDynamicParameter
     {
         [Option("i")]
         public string Input { set; get; }

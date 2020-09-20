@@ -7,9 +7,9 @@
     <Authors>HCGStudio</Authors>
 
     <ApplicationIcon>..\images\icon.ico</ApplicationIcon>
-    <StartupObject>HITScheduleMasterCLI.Program</StartupObject>
+    <StartupObject>HitScheduleMaster.Program</StartupObject>
     <AssemblyName>HitSM</AssemblyName>
-    <RootNamespace>HITScheduleMasterCLI</RootNamespace>
+    <RootNamespace>HitScheduleMaster</RootNamespace>
     <GenerateDocumentFile>true</GenerateDocumentFile>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 
@@ -38,9 +38,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="PlasticMetal.MobileSuit" Version="2.1.0.1" />
+    <PackageReference Include="PlasticMetal.MobileSuit" Version="2.1.1" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\HIT-Schedule-Master-Core\src\HitScheduleMaster.csproj" />
     <ProjectReference Include="..\..\HIT-Schedule-Master-Core\src\HITScheduleMasterCore.csproj" />
   </ItemGroup>
 
