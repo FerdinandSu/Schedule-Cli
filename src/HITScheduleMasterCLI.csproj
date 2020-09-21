@@ -7,9 +7,9 @@
     <Authors>HCGStudio</Authors>
 
     <ApplicationIcon>..\images\icon.ico</ApplicationIcon>
-    <StartupObject>HITScheduleMasterCLI.Program</StartupObject>
+    <StartupObject>HitScheduleMaster.Program</StartupObject>
     <AssemblyName>HitSM</AssemblyName>
-    <RootNamespace>HITScheduleMasterCLI</RootNamespace>
+    <RootNamespace>HitScheduleMaster</RootNamespace>
     <GenerateDocumentFile>true</GenerateDocumentFile>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 
@@ -17,7 +17,7 @@
     <PackageProjectUrl>https://github.com/HCGStudio/HIT-Schedule-Master-CLI</PackageProjectUrl>
     <RepositoryUrl>https://github.com/HCGStudio/HIT-Schedule-Master-CLI.git</RepositoryUrl>
     <RepositoryType>Github</RepositoryType>
-    <Version>1.3.0.2</Version>
+    <Version>1.2.3</Version>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Nullable>enable</Nullable>
     <LangVersion>8.0</LangVersion>
@@ -37,9 +37,11 @@
     <None Include="..\images\icon.ico" Pack="true" PackagePath="\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="HCGStudio.HITScheduleMasterCore" Version="1.3.0.2" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="PlasticMetal.MobileSuit" Version="2.1.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\HIT-Schedule-Master-Core\src\HITScheduleMasterCore.csproj" />
   </ItemGroup>
 
 </Project>
