@@ -41,7 +41,6 @@
     <PackageReference Include="PlasticMetal.MobileSuit" Version="2.1.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\HIT-Schedule-Master-Core\src\HitScheduleMaster.csproj" />
     <ProjectReference Include="..\..\HIT-Schedule-Master-Core\src\HITScheduleMasterCore.csproj" />
   </ItemGroup>
 

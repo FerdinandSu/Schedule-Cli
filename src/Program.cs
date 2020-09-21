@@ -46,10 +46,7 @@ namespace HitScheduleMaster
         [SuitInfo("向课表添加一个课程条目:add <课程名称>")]
         public TraceBack Add(string courseName)
         {
-            if (!Schedule.Entries.Contains(courseName))
-            {
-                Schedule.Entries.Add(new CourseEntry(courseName));
-            }
+            _ = Schedule[courseName];
             if (!int.TryParse(IO.ReadLine("输入星期(0-6,0表示周日)"), out var week)
             || week < 0 || week > 6) return TraceBack.InvalidCommand;
             for (int i = 0; i < 6; i++)
@@ -65,7 +62,7 @@ namespace HitScheduleMaster
 
             var weekExpression = IO.ReadLine("输入教师-周数-教室表达式(正则：教师[周数|起始-截至[单|双]?](|[周数|起始-截至[单|双]?])*教室, 如张三[10]|李四[1|2-9单]正心11)", true);
 
-            Schedule.Entries[courseName].SubEntries.Add(new CourseSubEntry((DayOfWeek)week, (CourseTime)startTime, isLong, isLab, weekExpression));
+            Schedule[courseName].AddSubEntry((DayOfWeek)week, (CourseTime)startTime, isLong, isLab, weekExpression);
             return TraceBack.AllOk;
         }
         /// <summary>
@@ -81,7 +78,7 @@ namespace HitScheduleMaster
                 IO.WriteLine("未找到文件。", OutputType.Error);
                 return;
             }
-            Schedule.Entries.Add(DeserializeObject<CourseEntry>(File.ReadAllText(path)));
+            Schedule.Add(DeserializeObject<CourseEntry>(File.ReadAllText(path)));
         }
         /// <summary>
         /// 从课表导出一个JSON描述的课程
@@ -97,7 +94,7 @@ namespace HitScheduleMaster
                 path = IO.ReadLine("输入保存文件位置") ?? "";
             try
             {
-                File.WriteAllText(path, SerializeObject(Schedule.Entries[courseName]));
+                File.WriteAllText(path, SerializeObject(Schedule[courseName]));
             }
             catch
             {
@@ -118,11 +115,11 @@ namespace HitScheduleMaster
             if (Schedule is null) return;
             if (subId == -1)
             {
-                Schedule.Entries.Remove(course);
+                Schedule.Remove(course);
             }
             else
             {
-                Schedule.Entries[course].SubEntries.RemoveAt(subId);
+                Schedule[course].RemoveSubEntry(subId);
             }
         }
         /// <summary>
@@ -139,14 +136,14 @@ namespace HitScheduleMaster
             if (Schedule is null) return TraceBack.InvalidCommand;
             if (subId == -1)
             {
-                Schedule.Entries[course].CourseName
-                    = IO.ReadLine($"输入课程名称={Schedule.Entries[course].CourseName}", Schedule.Entries[course].CourseName,
+                Schedule[course].CourseName
+                    = IO.ReadLine($"输入课程名称={Schedule[course].CourseName}", Schedule[course].CourseName,
                     null);
                 return TraceBack.AllOk;
             }
             else
             {
-                var targetSub = Schedule.Entries[course].SubEntries[subId];
+                var targetSub = Schedule[course][subId];
                 if (!int.TryParse(IO.ReadLine($"输入星期(0-6,0表示周日)={(int)targetSub.DayOfWeek}",
                     ((int)targetSub.DayOfWeek).ToString()), out var week)
             || week < 0 || week > 6) return TraceBack.InvalidCommand;
@@ -159,12 +156,12 @@ namespace HitScheduleMaster
                 if (!int.TryParse(IO.ReadLine($"输入节次(0-5)=${(int)targetSub.CourseTime}",
                     ((int)targetSub.CourseTime).ToString()), out var startTime) || startTime < 0 || startTime > 5)
                     return TraceBack.InvalidCommand;
-                var isLong = IO.ReadLine("这是两节连上的课吗？(N|else)", "n")?.ToLower(CultureInfo.CurrentCulture) == "n";
-                var isLab = IO.ReadLine("这是实验课课吗？(N|else)", "n")?.ToLower(CultureInfo.CurrentCulture) == "n";
+                var isLong = IO.ReadLine("这是两节连上的课吗？(N|else)", "n")?.ToLower(CultureInfo.CurrentCulture) != "n";
+                var isLab = IO.ReadLine("这是实验课课吗？(N|else)", "n")?.ToLower(CultureInfo.CurrentCulture) != "n";
 
                 var weekExpression = IO.ReadLine("输入教师-周数-教室表达式(正则：教师[周数|起始-截至[单|双]?](|[周数|起始-截至[单|双]?])*教室, 如张三[10]|李四[1|2-9单]正心11)", true);
-                Schedule.Entries[course].SubEntries.Remove(targetSub);
-                Schedule.Entries[course].SubEntries.Add(new CourseSubEntry((DayOfWeek)week, (CourseTime)startTime, isLong, isLab, weekExpression));
+                Schedule[course].RemoveSubEntry(targetSub);
+                Schedule[course].AddSubEntry ((DayOfWeek)week, (CourseTime)startTime, isLong, isLab, weekExpression);
                 return TraceBack.AllOk;
             }
 
@@ -195,41 +192,139 @@ namespace HitScheduleMaster
                 Environment.Exit(0);
             }
         }
-        [SuitInfo("显示整张课表：Export <.ics>")]
+        /// <summary>
+        /// 禁用指定课程/所有课程通知
+        /// </summary>
+        /// <param name="course"></param>
+        [SuitAlias("DsNtf")]
+        [SuitInfo("启用指定课程/所有课程通知：EnNtf[ <课程名>]")]
+        public void DisableNotification(
+            string course="")
+        {
+
+            if (course=="")
+            {
+                Schedule.EnableNotification = false;
+            }
+            else
+            {
+                Schedule[course].EnableNotification = false;
+
+            }
+        }
+        /// <summary>
+        /// 禁用周编号
+        /// </summary>
+        [SuitAlias("DsWi")]
+        [SuitInfo("禁用周编号：DsWi")]
+        public void DisableWeekIndex()
+        {
+            Schedule.DisableWeekIndex = true;
+        }
+        /// <summary>
+        /// 启用周编号
+        /// </summary>
+        [SuitAlias("EnWi")]
+        [SuitInfo("启用周编号：EnWi")]
+        public void EnableWeekIndex()
+        {
+            Schedule.DisableWeekIndex = false;
+        }
+
+        /// <summary>
+        /// 启用指定课程/所有课程通知
+        /// </summary>
+        /// <param name="course"></param>
+        [SuitAlias("EnNtf")]
+        [SuitInfo("启用指定课程/所有课程通知：EnNtf[ <课程名称>]")]
+        public void EnableNotification(string course="")
+        {
+            if (course == "")
+            {
+                Schedule.EnableNotification = true;
+            }
+            else
+            {
+                Schedule[course].EnableNotification = true;
+
+            }
+        }
+        /// <summary>
+        /// 显示整张课表
+        /// </summary>
+        [SuitAlias("V")]
+        [SuitInfo("显示整张课表：V")]
         public void Show()
         {
+            
             ScheduleCheck();
             if (Schedule is null) return;
-            var maxWeek = (from e in Schedule select e.MaxWeek).Max();
+            var maxWeek = Schedule.MaxWeek;
+            IO.WriteLine(Suit.CreateContentArray(
+                ("课表：", null), 
+                ($"\t{(Schedule.EnableNotification==null?"通知有开有关": (bool)Schedule.EnableNotification ? "启用通知" : "关闭通知")}",
+                Schedule.EnableNotification == null ? IO.ColorSetting.CustomInformationColor : (bool)Schedule.EnableNotification ? IO.ColorSetting.AllOkColor: IO.ColorSetting.ErrorColor),
+                ($"\t{(Schedule.DisableWeekIndex  ? "周索引关闭" : "周索引开启")}", Schedule.DisableWeekIndex?IO.ColorSetting.ErrorColor:IO.ColorSetting.AllOkColor)), OutputType.Prompt);
+            IO.AppendWriteLinePrefix();
             var outList = new List<(string, ConsoleColor?)>
             {
-                ("编号",null),
-                ("\t", null),
-                ("课程名".PadRight(22,' '), null),
-                ("\t", null),
-                ("星期", null),
-                ("\t\t", null),
-                ("起始时间", null),
-                ("\t", null),
-                ("课程长度",null),
-                ("\t", null),
-                ("授课教师", null),
-                ("\t", null),
-                ("课程地点".PadRight(8,' '), null),
-                ("\t", null)
+
+                ("\t周二\t三四节\t实验\t", Console.BackgroundColor)
+
 
             };
+
             for (var i = 1; i <= maxWeek; i++)
             {
-                outList.Add(($"{i} ".PadLeft(4, '0'), null));
+                outList.Add(($"{i} ".PadLeft(3, '0').PadLeft(4,' '), null));
             }
 
             IO.WriteLine(outList, OutputType.ListTitle);
-            for (var i = 0; i < Schedule.Count; i++)
+            foreach (var course in Schedule)
             {
-                ShowScheduleEntry(i, maxWeek, Schedule[i]);
+                IO.WriteLine(course.CourseName, OutputType.CustomInfo);
+                IO.AppendWriteLinePrefix();
+                foreach (var item in course)
+                {
+                    var subOutList = new List<(string, ConsoleColor?, ConsoleColor?)>
+                    {
+                        ($"{item.DayOfWeek.ToFriendlyName()}\t",IO.ColorSetting.InformationColor,null),
+                        ($"{item.CourseTime.ToFriendlyName()}\t",IO.ColorSetting.InformationColor,null),
+                        ($"{(item.IsLab?"实验":"    ")}\t",IO.ColorSetting.InformationColor,null)
+                    };
+                    for(var i = 1; i <= maxWeek; i++)
+                    {
+                        subOutList.Add((" ", null, null));
+                        if (string.IsNullOrEmpty(item[i].Name))
+                        {
+                            subOutList.Add(("  ", null, IO.ColorSetting.AllOkColor));
+                        }
+                        else
+                        {
+                            subOutList.Add(("  ", null, IO.ColorSetting.ErrorColor));
+                        }
+                        subOutList.Add((" ", null, null));
+                    }
+                    IO.WriteLine(subOutList);
+                }
+                IO.SubtractWriteLinePrefix();
             }
+            IO.SubtractWriteLinePrefix();
+            IO.WriteLine("日期映射：", OutputType.Prompt);
+            IO.AppendWriteLinePrefix();
+            foreach (var item in Schedule.DateMap)
+            {
+                IO.WriteLine(Suit.CreateContentArray(
+                    (item.Key.ToShortDateString(), IO.ColorSetting.InformationColor),
+                    (" -> ", null),
+                    (item.Value==null?"停课":((DateTime)item.Value).ToShortDateString(), IO.ColorSetting.InformationColor)));
+            }
+            IO.SubtractWriteLinePrefix();
         }
+        /// <summary>
+        /// 从xls导入整个课表
+        /// </summary>
+        /// <param name="path"></param>
         [SuitAlias("Ld")]
         [SuitInfo("从xls导入整个课表：LoadXls <.xls>")]
         public void LoadXls(string path)
@@ -244,6 +339,10 @@ namespace HitScheduleMaster
             using var fs = File.OpenRead(path);
             Schedule = Schedule.LoadFromXlsStream(fs);
         }
+        /// <summary>
+        /// 从json导入整个课表
+        /// </summary>
+        /// <param name="path"></param>
         [SuitInfo("从json导入整个课表：LoadJson <.json>")]
         public void LoadJson(string path)
         {
@@ -254,6 +353,9 @@ namespace HitScheduleMaster
             }
             Schedule = DeserializeObject<Schedule>(File.ReadAllText(path));
         }
+        /// <summary>
+        /// 创建新课表
+        /// </summary>
         [SuitInfo("创建新课表")]
         public void New()
         {
@@ -279,13 +381,18 @@ namespace HitScheduleMaster
 
             Schedule = new Schedule(year, (Semester)s);
         }
+        /// <summary>
+        /// 打开浏览器下载课表
+        /// </summary>
         [SuitAlias("Dl")]
         [SuitInfo("打开浏览器下载课表")]
         public void Download()
         {
             Process.Start(new ProcessStartInfo("http://jwts-hit-edu-cn.ivpn.hit.edu.cn/") { UseShellExecute = true });
         }
-
+        /// <summary>
+        /// 初始化课表
+        /// </summary>
         [SuitInfo("初始化课表")]
         public void Init()
         {
@@ -305,10 +412,10 @@ namespace HitScheduleMaster
                     //    Auto();
                     //    break;
                     case 1:
-                        LoadXls(IO.ReadLine("Xls位置"));
+                        LoadXls(IO.ReadLine("Xls位置") ?? "");
                         break;
                     case 2:
-                        LoadJson(IO.ReadLine("Json位置"));
+                        LoadJson(IO.ReadLine("Json位置")??"");
                         break;
                     case 3:
                         New();
@@ -324,13 +431,17 @@ namespace HitScheduleMaster
             }
 
         }
+        /// <summary>
+        /// 保存整张课表到Json
+        /// </summary>
+        /// <param name="path"></param>
         [SuitInfo("保存整张课表到Json：Save <.json>")]
         public void Save(string path = "")
         {
             ScheduleCheck();
             if (Schedule is null) return;
             if (path == "")
-                path = IO.ReadLine("输入保存JSON文件位置");
+                path = IO.ReadLine("输入保存JSON文件位置")??"";
             try
             {
                 File.WriteAllText(path, SerializeObject(Schedule));
@@ -341,57 +452,96 @@ namespace HitScheduleMaster
                 Environment.Exit(0);
             }
         }
+        /// <summary>
+        /// Parser
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public static object ParseShortDate(string s)
+        {
+            return DateTime.ParseExact(s, "d", CultureInfo.CurrentCulture);
+        }
+        /// <summary>
+        /// 进行/解除日期映射
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        [SuitAlias("dmap")]
+        [SuitInfo("日期映射(目的为空则此日停课): dmap <源>[ <目的>]")]
+        public void DateMap(
+            [SuitParser(typeof(Program),nameof(ParseShortDate))]DateTime from, [SuitParser(typeof(Program), nameof(ParseShortDate))] DateTime? to=null)
+        {
+            if (from==to)
+            {
+                Schedule.DateMap.Remove(from);
+            }
+            else
+            {
+                if(Schedule.DateMap.ContainsKey(from))
+                    Schedule.DateMap.Remove(from);
+                Schedule.DateMap.Add(from, to);
+            }
+        }
         private void ScheduleCheck()
         {
             if (Schedule is null) Init();
         }
-        private void ShowScheduleEntry(int index, int maxWeek, ScheduleEntry entry)
+        /// <summary>
+        /// 显示课程详情
+        /// </summary>
+        /// <param name="courseName"></param>
+        [SuitAlias("Detail")]
+        [SuitAlias("Det")]
+        [SuitInfo("显示课程详情: Det <课程名称>")]
+        public void ShowCourseEntry(string courseName)
         {
-            var outList = new List<(string, ConsoleColor?)>
+            ScheduleCheck();
+            if (!Schedule.Contains(courseName))
             {
-                (index.ToString(),null),
-                ("\t", null),
-                (entry.CourseName.PadRight(22,' '), null),
-                ("\t", null),
-                (entry.DayOfWeekName, null),
-                ("\t\t", null),
-                (entry.StartTime.ToString(), null),
-                ("\t", null),
-                (entry.Length.ToString(),null),
-                ("\t", null),
-                (entry.Teacher, null),
-                ("\t\t", null),
-                (entry.Location.PadRight(8,' '), null),
-                ("\t", null)
-
-            };
-            var week = 1;
-            for (var i = entry.Week >> 1; week <= maxWeek; i >>= 1, week++)
+                IO.WriteLine($"课程 {courseName} 不存在！", OutputType.Error);
+                return;
+            }
+            
+            IO.WriteLine(Suit.CreateContentArray( (courseName,null),($"\t{(Schedule[courseName].EnableNotification?"启用通知":"关闭通知")}",IO.ColorSetting.ErrorColor)));
+            IO.AppendWriteLinePrefix();
+            foreach (var item in Schedule[courseName])
             {
+                IO.WriteLine(Suit.CreateContentArray(($"{item.DayOfWeek.ToFriendlyName()}\t", IO.ColorSetting.InformationColor, null),
+                        ($"{item.CourseTime.ToFriendlyName()}\t", IO.ColorSetting.InformationColor, null),
+                        ($"{(item.IsLab ? "实验" : "    ")}\t", IO.ColorSetting.InformationColor, null),
+                        ($"{(item.IsLongCourse ? "两届连上" : "        ")}\t", IO.ColorSetting.InformationColor, null)
+                        ));
+                IO.AppendWriteLinePrefix();
+                IO.WriteLine("周\t教室\t老师",OutputType.ListTitle);
+                foreach (var (i,cell) in item)
+                {
+                    IO.WriteLine($"{i}\t{cell.Location}\t{cell.Teacher}");
+                }
 
-                if ((i & 1) == 1)
-                {
-                    outList.Add((" 1  ", ConsoleColor.Green));
-                }
-                else
-                {
-                    outList.Add((" 0  ", ConsoleColor.Red));
-                }
+                IO.SubtractWriteLinePrefix();
             }
 
-            IO.WriteLine(outList);
+            IO.SubtractWriteLinePrefix();
         }
-
+        /// <inheritdoc/>
         public override void SuitShowUsage()
         {
             IO.WriteLine("Usage: \n\tHitScheduleMaster\n\tHitScheduleMaster -i <.xls> -o <.ics>");
         }
-
+        /// <inheritdoc/>
         public override int SuitStartUp(StartUpArgs arg)
         {
             try
             {
                 LoadXls(arg.Input);
+                if (arg.EnableNotification)
+                {
+                    EnableNotification();
+                }
+                else
+                {
+                    DisableNotification();
+                }
                 Export(arg.Output);
                 return 0;
             }
