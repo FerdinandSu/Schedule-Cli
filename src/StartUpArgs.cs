@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace HitScheduleMaster
+namespace HitRefresh.Schedule
 {
     /// <summary>
     /// 启动参数
@@ -23,7 +23,19 @@ namespace HitScheduleMaster
         /// <summary>
         /// 启用通知
         /// </summary>
-        [Switch("n")]
+        [Switch("-enable-notification")]
         public bool EnableNotification { get; set; } = false;
+        /// <summary>
+        /// 关闭周数
+        /// </summary>
+        [Switch("-disable-week-index")]
+        public bool DisableWeekIndex { get; set; } = false;
+        /// <summary>
+        /// 通知时间
+        /// </summary>
+        [WithDefault]
+        [SuitParser(typeof(Parsers),nameof(Parsers.ParseInt))]
+        [Option("t")]
+        public int NotificationTime { get; set; } = 25;
     }
 }
