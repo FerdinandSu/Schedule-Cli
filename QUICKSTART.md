@@ -5,7 +5,7 @@
 ### 从包管理系统
 
 请确保您在电脑上安装了[.NET Core SDK](https://dotnet.microsoft.com/download/dotnet-core/)
-Schedule-Cli被打包为dotnet global tool，因此在终端中执行`dotnet tool install HitRefresh.Schedule-cli`即可完成安装
+Schedule-Cli被打包为dotnet global tool，因此在终端中执行`dotnet tool install HitRefresh.Schedule-cli --global`即可完成安装
 
 ## 在教务处网站上获取课表
 
