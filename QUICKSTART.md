@@ -2,54 +2,67 @@
 
 ## 安装
 
-HITScheduleMasterCLI被打包为dotnet global tool，因此在终端中执行`dotnet tool install HitSM-cli`即可完成安装
+### 从包管理系统（推荐）
+
+请确保您在电脑上安装了[.NET Core SDK](https://dotnet.microsoft.com/download/dotnet-core/)
+Schedule-Cli被打包为dotnet global tool，因此在终端中执行`dotnet tool install HitRefresh.Schedule-cli`即可完成安装
+
+### 从Release
+
+
 
 ## 在教务处网站上获取课表
 
 请登录jwts，然后在个人课表查询处下载xls格式的课表。
 
-## 运行HITScheduleMasterCLI
+## 运行Schedule-Cli
 
 ### 快速使用
 
-直接执行`HitSM -i <.xls> -o <.ics>`即可
-
-如果您想打开通知，使用`HitSM -i <.xls> -o <.ics> -n`
+直接执行`HRSchedule -i <.xls> -o <.ics>`即可
 
 ### 细节使用
 
-执行`HitSM`命令来启动程序
+执行`HRSchedule`命令来启动程序
 
 输入'ls'即可获得所有可用命令:
 
-![](https://github.com/HCGStudio/HIT-Schedule-Master-CLI/raw/master/images/image-6.png)
+![](https://github.com/HIT-ReFreSH/Schedule-Cli/raw/master/images/image-6.png)
 
 #### 一般用法
 
-直接使用Export+要保存到的ics位置，即可快速完成导出。
+`Ld <.xls>`可以导入Xls格式的课表，然后可以使用`Save <.json>`将其保存到Json。
 
-![](https://github.com/HCGStudio/HIT-Schedule-Master-CLI/raw/master/images/image-7.png)
+Json格式课表可以使用`Lj <.json>`来导入。New则是从头开始手动创建课表。
 
-#### 进阶用法
+使用`V`指令，可以查看整张课表的课程情况
 
-LoadXls可以导入Xls格式的课表，然后可以使用Save将其保存到Json。
+![](https://github.com/HIT-ReFreSH/Schedule-Cli/raw/master/images/image-7.png)
 
-Json格式课表可以使用LoadJson来导入。New则是从头开始手动创建课表。
+使用`Ex <.ics>`指令把课表导出到ics
 
-使用Show指令，可以查看整张课表的课程情况，以及其对应编号
+使用`det <课名>`可以查看某个课程详细信息
 
-ImpCse和ExpCse可以导入或者导出单个课程。
+![](https://github.com/HIT-ReFreSH/Schedule-Cli/raw/master/images/image-8.png)
+
+`Ed <课程名>`则可以对课程进行编辑
+
+`Rm <课程名>`删除课程。
+
+
+`ImpCs <.json>`和`ExpCs <课名> <.json>`可以导入或者导出单个课程。
 Add则是从头开始手动加入课程。
 
-![](https://github.com/HCGStudio/HIT-Schedule-Master-CLI/raw/master/images/image-8.png)
+`dmap <源日期>[ <目标日期>]`可以进行日期映射，如：
 
-![](https://github.com/HCGStudio/HIT-Schedule-Master-CLI/raw/master/images/image-9.png)
+- `dmap 2020/10/10`将2020/10/10停课
+- `dmap 2020/10/1 2020/10/10`将2020/10/1的课程串到2020/10/10上课
 
-Edit则可以对课程进行编辑
+使用`V`指令，也可以查看这些日期映射的情况
 
-![](https://github.com/HCGStudio/HIT-Schedule-Master-CLI/raw/master/images/image-10.png)
+![](https://github.com/HIT-ReFreSH/Schedule-Cli/raw/master/images/image-9.png)
 
-Romove删除课程。
+更多可用指令，可输入`Ls`查看
 
 ## iCalendar格式的使用
 
@@ -61,17 +74,18 @@ Romove删除课程。
 
 根据提示，选择指定的日历即可完成导入。
 
-![image1](https://github.com/HCGStudio/HIT-Schedule-Master-CLI/raw/master/images/image-1.png)
+![image1](https://github.com/HIT-ReFreSH/Schedule-Cli/raw/master/images/image-1.png)
 
 导入后，日历将与您登录的电子邮件账户同步，在移动端登录邮箱也会同步导入的日历。
 
 ### Outlook日历如何导入
 
-1. 首先登陆网页版[网页版Outlook日历](https://outlook.live.com/calendar/)进行导入。
-2. 在左边栏中点击"添加日历"![image2](https://github.com/HCGStudio/HIT-Schedule-Master-CLI/raw/master/images/image-3.png)
-3. 在弹出的窗口中，如图示完成新建日历。![image3](https://github.com/HCGStudio/HIT-Schedule-Master-CLI/raw/master/images/image-4.png)
-4. 将ICS描述的事件导入到新建的日历中。![image4](https://github.com/HCGStudio/HIT-Schedule-Master-CLI/raw/master/images/image-5.png)
+**注：Outlook日历默认会针对没有提醒的时间会添加提前15分钟的提醒，这个可以在设置里改成开始时提醒，或者干脆在导入ics那步用本地的windows/手机日历导入即可。**
 
+1. 首先登陆网页版[网页版Outlook日历](https://outlook.live.com/calendar/)进行导入。
+2. 在左边栏中点击"添加日历"![image2](https://github.com/HIT-ReFreSH/Schedule-Cli/raw/master/images/image-3.png)
+3. 在弹出的窗口中，如图示完成新建日历。![image3](https://github.com/HIT-ReFreSH/Schedule-Cli/raw/master/images/image-4.png)
+4. 将ICS描述的事件导入到新建的日历中。![image4](https://github.com/HIT-ReFreSH/Schedule-Cli/raw/master/images/image-5.png)
 
 ### Google日历 如何导入
 
