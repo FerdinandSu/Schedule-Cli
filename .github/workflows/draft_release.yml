@@ -5,7 +5,7 @@ on:
       - master # Default release branch
 jobs:
   publish:
-    name: list on nuget
+    name: draft release
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -22,8 +22,6 @@ jobs:
         run: |
           apt update
           apt install zip
-      - name: Checkout code
-        uses: actions/checkout@v2
 
       - name: build packages
         run: bash scripts/build-packages.sh
