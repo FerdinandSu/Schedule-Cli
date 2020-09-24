@@ -1,0 +1,82 @@
+name: draft github release
+on:
+  push:
+    branches:
+      - master # Default release branch
+jobs:
+  publish:
+    name: list on nuget
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      # Required for a specific dotnet version that doesn't come with ubuntu-latest / windows-latest
+      # Visit bit.ly/2synnZl to see the list of SDKs that are pre-installed with ubuntu-latest / windows-latest
+      # - name: Setup dotnet
+      #   uses: actions/setup-dotnet@v1
+      #   with:
+      #     dotnet-version: 3.1.100
+      - name: install dependencies
+        run: |
+          apt update
+          apt install zip
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: build packages
+        run: bash scripts/build-packages.sh
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.UPLOAD_RELEASE }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+      - name: Upload Release Asset(linux)
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.UPLOAD_RELEASE }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+          asset_path: publish/Schedule-Cli-linux-x64.tgz
+          asset_name: Schedule-Cli-linux-x64.tgz
+          asset_content_type: application/gzip
+
+      - name: Upload Release Asset(OSX)
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.UPLOAD_RELEASE }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+          asset_path: publish/Schedule-Cli-osx-x64.tgz
+          asset_name: Schedule-Cli-osx-x64.tgz
+          asset_content_type: application/gzip
+
+      - name: Upload Release Asset(Win64)
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.UPLOAD_RELEASE }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+          asset_path: publish/Schedule-Cli-win-x64.zip
+          asset_name: Schedule-Cli-win-x64.zip
+          asset_content_type: application/zip
+      - name: Upload Release Asset(Win32)
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.UPLOAD_RELEASE }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+          asset_path: publish/Schedule-Cli-win-x86.zip
+          asset_name: Schedule-Cli-win-x86.zip
+          asset_content_type: application/zip
