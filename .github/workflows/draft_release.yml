@@ -4,25 +4,14 @@ on:
     branches:
       - master # Default release branch
 jobs:
-  publish:
+  build:
     name: draft release
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
         with:
           submodules: true
-
-      # Required for a specific dotnet version that doesn't come with ubuntu-latest / windows-latest
-      # Visit bit.ly/2synnZl to see the list of SDKs that are pre-installed with ubuntu-latest / windows-latest
-      # - name: Setup dotnet
-      #   uses: actions/setup-dotnet@v1
-      #   with:
-      #     dotnet-version: 3.1.100
-      - name: install dependencies
-        run: |
-          apt update
-          apt install zip
-
+          
       - name: build packages
         run: bash scripts/build-packages.sh
 
