@@ -19,7 +19,7 @@ jobs:
       #   with:
       #     dotnet-version: 3.1.100
       - name: build project
-        run: dotnet build -c release Schedule-Cli.sln
+        run: dotnet build -c release src/Schedule-Cli-tool.csproj
       # Publish
       - name: publish on version change
         uses: rohith/publish-nuget@v2
