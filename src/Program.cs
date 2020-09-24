@@ -23,7 +23,7 @@ namespace HitRefresh.Schedule
         {
             Suit.GetBuilder()
                 .UsePrompt<PowerLineThemedPromptServer>()
-                .UseLog(ScheduleStatic.Logger)
+                .UseLog(PlasticMetal.MobileSuit.Core.ILogger.OfFile(@"D:\SCM.log"))//Logger)
                 .Build<Program>()
                 .Run(args);
 
@@ -548,20 +548,24 @@ namespace HitRefresh.Schedule
                 ("-i <输入xls> ", IO.ColorSetting.AllOkColor),
                 ("-o <输出ics>", IO.ColorSetting.ErrorColor)
                 ));
-            //IO.WriteLine("可用选项:", OutputType.Prompt);
-            //IO.AppendWriteLinePrefix();
-            //IO.WriteLine(Suit.CreateContentArray(
-            //    ("--disable-week-index", IO.ColorSetting.InformationColor),
-            //    ("\t关闭周数显示", IO.ColorSetting.ErrorColor)
-            //    ));
-            //IO.WriteLine(Suit.CreateContentArray(
-            //    ("--enable-notification", IO.ColorSetting.InformationColor),
-            //    ("\t启用通知", IO.ColorSetting.AllOkColor)
-            //    ));
-            //IO.WriteLine(Suit.CreateContentArray(
-            //    ("-t <提醒提前的分钟数>", IO.ColorSetting.InformationColor),
-            //    ("\t设定通知时间(默认25)", IO.ColorSetting.AllOkColor)
-            //    ));
+            IO.WriteLine("可用选项:", OutputType.Prompt);
+            IO.AppendWriteLinePrefix();
+            IO.WriteLine(Suit.CreateContentArray(
+                ("--disable-week-index", IO.ColorSetting.InformationColor),
+                ("\t关闭周数显示", IO.ColorSetting.ErrorColor)
+                ));
+            IO.WriteLine(Suit.CreateContentArray(
+                ("--enable-notification", IO.ColorSetting.InformationColor),
+                ("\t启用通知", IO.ColorSetting.AllOkColor)
+                ));
+            IO.WriteLine(Suit.CreateContentArray(
+                ("-t <提醒提前的分钟数>", IO.ColorSetting.InformationColor),
+                ("\t设定通知时间(默认25)", IO.ColorSetting.AllOkColor)
+                ));
+            IO.WriteLine(Suit.CreateContentArray(
+    ("-m <源日期>[:<目标>]", IO.ColorSetting.InformationColor),
+    ("\t日期映射，支持多个-m", IO.ColorSetting.AllOkColor)
+    ));
             IO.SubtractWriteLinePrefix();
 
             IO.WriteLine("一般使用:");
@@ -583,13 +587,13 @@ namespace HitRefresh.Schedule
             try
             {
                 LoadXls(arg.Input);
-                //Schedule.EnableNotification = arg.EnableNotification;
-                //Schedule.DisableWeekIndex = arg.DisableWeekIndex;
-                //Schedule.NotificationTime = arg.NotificationTime;
-                //foreach (var item in arg.DateMap)
-                //{
-                //    Schedule.DateMap.Add(item);
-                //}
+                Schedule.EnableNotification = arg.EnableNotification;
+                Schedule.DisableWeekIndex = arg.DisableWeekIndex;
+                Schedule.NotificationTime = arg.NotificationTime;
+                foreach (var item in arg.DateMap)
+                {
+                    Schedule.DateMap.Add(item);
+                }
                 Export(arg.Output);
                 Environment.Exit(0);
                 return 0;

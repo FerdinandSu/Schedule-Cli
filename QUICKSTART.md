@@ -2,10 +2,16 @@
 
 ## 安装
 
+## 从Github Release
+
+前往[Release](https://github.com/HIT-ReFreSH/Schedule-Cli/releases)下载操作系统对应的压缩包，解压后即可运行。
+
 ### 从包管理系统
 
 请确保您在电脑上安装了[.NET Core SDK](https://dotnet.microsoft.com/download/dotnet-core/)
 Schedule-Cli被打包为dotnet global tool，因此在终端中执行`dotnet tool install HitRefresh.Schedule-cli --global`即可完成安装
+
+如果需要更新，请先运行`dotnet tool uninstall HitRefresh.Schedule-cli --global`
 
 ## 在教务处网站上获取课表
 
@@ -16,6 +22,10 @@ Schedule-Cli被打包为dotnet global tool，因此在终端中执行`dotnet too
 ### 快速使用
 
 直接执行`HRSchedule -i <.xls> -o <.ics>`即可
+
+除此之外，还支持以下选项：
+
+![](https://github.com/HIT-ReFreSH/Schedule-Cli/raw/master/images/image-11.png)
 
 ### 细节使用
 

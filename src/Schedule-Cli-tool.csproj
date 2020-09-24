@@ -22,7 +22,8 @@
     <Nullable>enable</Nullable>
     <LangVersion>8.0</LangVersion>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
-  
+    <PackAsTool>true</PackAsTool>
+
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     <Description>用于将哈尔滨工业大学的课表转换为iCalendar格式.</Description>
     <Copyright>Copyright (c) 2019-2020 HitReFreSH</Copyright>

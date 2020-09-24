@@ -38,29 +38,29 @@ namespace HitRefresh.Schedule
         /// </summary>
         [Option("o")]
         public string Output { set; get; } = "";
-        ///// <summary>
-        ///// 启用通知
-        ///// </summary>
-        //[Switch("-enable-notification")]
-        //public bool EnableNotification { get; set; } = false;
-        ///// <summary>
-        ///// 关闭周数
-        ///// </summary>
-        //[Switch("-disable-week-index")]
-        //public bool DisableWeekIndex { get; set; } = false;
-        ///// <summary>
-        ///// 通知时间
-        ///// </summary>
-        //[WithDefault]
-        //[SuitParser(typeof(Parsers), nameof(Parsers.ParseInt))]
-        //[Option("t")]
-        //public int NotificationTime { get; set; } = 25;
-        ///// <summary>
-        ///// 日期映射
-        ///// </summary>
-        //[AsCollection]
-        //[SuitParser(typeof(StartUpArgs),nameof(ParseDateTimeTuple))]
-        //[Switch("m")]
-        //public Dictionary<DateTime, DateTime?> DateMap { get; } = new Dictionary<DateTime, DateTime?>();
+        /// <summary>
+        /// 启用通知
+        /// </summary>
+        [Switch("-enable-notification")]
+        public bool EnableNotification { get; set; } = false;
+        /// <summary>
+        /// 关闭周数
+        /// </summary>
+        [Switch("-disable-week-index")]
+        public bool DisableWeekIndex { get; set; } = false;
+        /// <summary>
+        /// 通知时间
+        /// </summary>
+        [WithDefault]
+        [SuitParser(typeof(Parsers), nameof(Parsers.ParseInt))]
+        [Option("t")]
+        public int NotificationTime { get; set; } = 25;
+        /// <summary>
+        /// 日期映射
+        /// </summary>
+        [AsCollection]
+        [SuitParser(typeof(StartUpArgs), nameof(ParseDateTimeTuple))]
+        [Option("m")]
+        public Dictionary<DateTime, DateTime?> DateMap { get; } = new Dictionary<DateTime, DateTime?>();
     }
 }
